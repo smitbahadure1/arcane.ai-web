@@ -1,17 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable experimental features for better performance
-  experimental: {
-    // Remove optimizeCss as it might cause issues
-  },
-
-  // Optimize images and static assets
+  // Netlify deployment configuration
+  output: 'export',
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     domains: ['images.unsplash.com', 'randomuser.me'],
   },
 
-  // Output configuration for better Vercel compatibility
-  output: 'standalone',
+  // Disable static optimization for dynamic features
+  generateBuildId: async () => {
+    return 'build-cache-' + Date.now()
+  }
 }
 
 module.exports = nextConfig
