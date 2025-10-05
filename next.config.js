@@ -1,26 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Optimize for Netlify deployment
-  output: 'export',
-  trailingSlash: true,
+  // Standard Next.js configuration for better Netlify compatibility
+  swcMinify: true,
 
-  // Image optimization for static export
+  // Image configuration
   images: {
-    unoptimized: true,
     domains: ['images.unsplash.com', 'randomuser.me'],
   },
-  
-  // Webpack configuration for Netlify compatibility
-  webpack: (config, { isServer }) => {
-    // Fix for canvas in server-side rendering
-    if (isServer) {
-      config.externals = config.externals || [];
-      config.externals.push({
-        canvas: 'canvas',
-      });
-    }
 
-    return config;
+  // Optimize for Netlify
+  experimental: {
+    // Enable optimizations for better performance
+    optimizePackageImports: ['lucide-react', '@supabase/supabase-js'],
+  },
+
+  // Build optimization
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
   },
 }
 
