@@ -4,13 +4,9 @@
 
 # Standard Next.js deployment
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
-# Redirects for SPA routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Next.js handles routing; no SPA catch-all redirect needed
 
 # Security headers
 [[headers]]
