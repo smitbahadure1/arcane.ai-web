@@ -1,22 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Vercel deployment optimizations
-  swcMinify: true,
+  // Optimize for Netlify deployment
+  output: 'export',
+  trailingSlash: true,
 
-  // Image optimization for Vercel
+  // Image optimization for static export
   images: {
+    unoptimized: true,
     domains: ['images.unsplash.com', 'randomuser.me'],
   },
+  
+  // Webpack configuration for Netlify compatibility
+  webpack: (config, { isServer }) => {
+    // Fix for canvas in server-side rendering
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push({
+        canvas: 'canvas',
+      });
+    }
 
-  // Enable experimental features for Vercel
-  experimental: {
-    // Enable WebGL support for Vercel
-    serverComponentsExternalPackages: ['canvas'],
-  },
-
-  // Optimize for Vercel's edge runtime
-  generateBuildId: async () => {
-    return 'build-' + Date.now()
+    return config;
   },
 }
 
