@@ -1,11 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable SWC for faster builds
+  // Vercel deployment optimizations
   swcMinify: true,
 
-  // Image configuration
+  // Image optimization for Vercel
   images: {
     domains: ['images.unsplash.com', 'randomuser.me'],
+  },
+
+  // Enable experimental features for Vercel
+  experimental: {
+    // Enable WebGL support for Vercel
+    serverComponentsExternalPackages: ['canvas'],
+  },
+
+  // Optimize for Vercel's edge runtime
+  generateBuildId: async () => {
+    return 'build-' + Date.now()
   },
 }
 
